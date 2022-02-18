@@ -1,13 +1,13 @@
 //
-//  ItemsViewController.swift
+//  ItemsVC.swift
 //  To-Do App
 //
-//  Created by Ananth Desai on 09/02/22.
+//  Created by Ananth Desai on 18/02/22.
 //
 
 import UIKit
 
-class ItemsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var index: Int
     

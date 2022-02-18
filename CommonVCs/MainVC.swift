@@ -1,33 +1,14 @@
 //
-//  ViewController.swift
+//  MainVC.swift
 //  To-Do App
 //
-//  Created by Ananth Desai on 07/02/22.
+//  Created by Ananth Desai on 18/02/22.
 //
+
 
 import UIKit
 
-struct Item {
-    var title: String
-    var items: [String]
-    
-    init(category title: String, array list: [String]) {
-        self.title = title
-        self.items = list
-    }
-    
-    mutating func addItem(_ item: String) {
-        self.items.append(item)
-    }
-}
-
-var sourceData: [Item] = [Item(category: "Shopping", array: ["Bread", "Butter", "Jam"]),
-                          
-                          Item(category: "Sports", array: ["Shoes", "Raquet", "Ball"]),
-                                          
-                          Item(category: "School", array: ["Books", "Pens"])]
-
-class ViewController: UIViewController {
+class MainVC: UIViewController {
     
     let returnButton: UIButton = {
        let button = UIButton()
@@ -59,13 +40,14 @@ class ViewController: UIViewController {
     }
     
     @objc func didStart(){
-        let rootVC = RootViewController()
+        let rootVC = CategoryVC()
         rootVC.title = "Todo"
         let navController = UINavigationController(rootViewController: rootVC)
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
     }
 }
+
 
 
 

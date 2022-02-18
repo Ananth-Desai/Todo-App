@@ -1,13 +1,13 @@
 //
-//  RootViewController.swift
+//  CategoryVC.swift
 //  To-Do App
 //
-//  Created by Ananth Desai on 08/02/22.
+//  Created by Ananth Desai on 18/02/22.
 //
 
 import UIKit
 
-class RootViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedIndex: Int = 0
     
@@ -24,7 +24,7 @@ class RootViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newVC = ItemsViewController(indexPath.row)
+        let newVC = ItemsVC(indexPath.row)
         selectedIndex = indexPath.row
         newVC.title = sourceData[indexPath.row].title
         navigationController?.pushViewController(newVC, animated: true)
