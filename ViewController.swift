@@ -59,27 +59,11 @@ class ViewController: UIViewController {
     }
     
     @objc func didStart(){
-        let rootVC = RootViewController(sourceData)
+        let rootVC = RootViewController()
         rootVC.title = "Todo"
         let navController = UINavigationController(rootViewController: rootVC)
         navController.modalPresentationStyle = .fullScreen
-        rootVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add",
-            style: .plain,
-            target: self,
-            action: #selector(tappedAdd)
-        )
         present(navController, animated: true)
-    }
-    
-    @objc func tappedAdd(vc: UIViewController) {
-        print("Add new Category: ")
-        let alert = UIAlertController(title: "Add Category", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {_ in }))
-        navigationController?.pushViewController(alert, animated: true)
-        vc.present(alert, animated: true)
-        //        sourceData.append(Item(category: "New Category", array: []))
     }
 }
 

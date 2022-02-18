@@ -9,15 +9,25 @@ import UIKit
 
 class RootViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var data: [Item]
+    var selectedIndex: Int = 0
     
-    init(_ lists: [Item]){
-        data = lists
-        super.init(nibName: nil, bundle: nil)
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sourceData.count
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = returnTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = sourceData[indexPath.row].title
+        cell.backgroundColor = .systemGreen
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let newVC = ItemsViewController(indexPath.row)
+        selectedIndex = indexPath.row
+        newVC.title = sourceData[indexPath.row].title
+        navigationController?.pushViewController(newVC, animated: true)
     }
     
     let returnTableView: UITableView = {
@@ -32,6 +42,18 @@ class RootViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.addSubview(returnTableView)
         returnTableView.dataSource = self
         returnTableView.delegate = self
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Add",
+            style: .plain,
+            target: self,
+            action: #selector(tappedAdd)
+        )
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        returnTableView.reloadData()
+        print("Root View appeared")
     }
     
     override func viewDidLayoutSubviews() {
@@ -39,33 +61,15 @@ class RootViewController: UIViewController, UITableViewDelegate, UITableViewData
         returnTableView.frame = view.bounds
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return items?.count ?? 0
-        return data.count
+    @objc func tappedAdd(vc: UIViewController) {
+        let alert = UIAlertController(title: "Add Category", message: "", preferredStyle: .alert)
+        alert.addTextField()
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {[alert] _ in
+            sourceData.append(Item(category: alert.textFields![0].text!, array: []))
+            self.returnTableView.reloadData()
+        }))
+        present(alert, animated: true, completion: nil)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = returnTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-//        cell.textLabel?.text = "\(items[indexPath.row])"
-        cell.textLabel?.text = data[indexPath.row].title
-        cell.backgroundColor = .systemGreen
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newVC = ItemsViewController(data[indexPath.row].items)
-        newVC.title = data[indexPath.row].title
-        newVC.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add",
-            style: .plain,
-            target: self,
-            action: #selector(newItem)
-        )
-        navigationController?.pushViewController(newVC, animated: true)
-    }
-    
-    @objc func newItem() {
-        print("Add new item")
-    }
 }
