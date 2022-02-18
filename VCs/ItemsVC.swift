@@ -10,6 +10,11 @@ import UIKit
 class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var index: Int
+    let returnRootView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        return table
+    }()
     
     init(_ index: Int) {
         self.index = index
@@ -31,13 +36,6 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
-    let returnRootView: UITableView = {
-        let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        return table
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -48,10 +46,10 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         print(sourceData[index].items)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add",
+            title: "+ Add",
             style: .plain,
             target: self,
-            action: #selector(newItem)
+            action: #selector(didTapAddItem)
         )
     }
     
@@ -64,7 +62,7 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         returnRootView.frame = view.bounds
     }
     
-    @objc func newItem() {
+    @objc func didTapAddItem() {
         let alert = UIAlertController(title: "Add Item", message: "", preferredStyle: .alert)
         alert.addTextField()
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

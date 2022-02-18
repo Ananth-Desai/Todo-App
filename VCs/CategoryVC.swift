@@ -10,6 +10,11 @@ import UIKit
 class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var selectedIndex: Int = 0
+    let returnTableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        return table
+    }()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sourceData.count
@@ -30,12 +35,6 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(newVC, animated: true)
     }
     
-    let returnTableView: UITableView = {
-        let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        return table
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
@@ -44,16 +43,15 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         returnTableView.delegate = self
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add",
+            title: "+ Add",
             style: .plain,
             target: self,
-            action: #selector(tappedAdd)
+            action: #selector(didTapAddCategory)
         )
     }
 
     override func viewDidAppear(_ animated: Bool) {
         returnTableView.reloadData()
-        print("Root View appeared")
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,7 +59,7 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         returnTableView.frame = view.bounds
     }
     
-    @objc func tappedAdd(vc: UIViewController) {
+    @objc func didTapAddCategory() {
         let alert = UIAlertController(title: "Add Category", message: "", preferredStyle: .alert)
         alert.addTextField()
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
