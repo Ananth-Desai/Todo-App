@@ -8,66 +8,83 @@
 import UIKit
 
 class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
     var selectedIndex: Int = 0
-    let returnTableView: UITableView = {
-        let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        return table
-    }()
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sourceData.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = returnTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = sourceData[indexPath.row].title
-        cell.backgroundColor = .systemGreen
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let newVC = ItemsVC(indexPath.row)
-        selectedIndex = indexPath.row
-        newVC.title = sourceData[indexPath.row].title
-        navigationController?.pushViewController(newVC, animated: true)
-    }
-    
+    var categoryTableView: UITableView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
-        view.addSubview(returnTableView)
-        returnTableView.dataSource = self
-        returnTableView.delegate = self
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "+ Add",
+        let constraints = setupCategoryTableView()
+        NSLayoutConstraint.activate(constraints)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: navbarRightButtonTitle,
             style: .plain,
             target: self,
             action: #selector(didTapAddCategory)
         )
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        returnTableView.reloadData()
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        returnTableView.frame = view.bounds
+        categoryTableView.frame = view.bounds
     }
-    
+
+    func setupCategoryTableView() -> [NSLayoutConstraint] {
+        categoryTableView = UITableView()
+        categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        categoryTableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(categoryTableView)
+        categoryTableView.dataSource = self
+        categoryTableView.delegate = self
+
+        return [
+            categoryTableView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            categoryTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            categoryTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            categoryTableView.topAnchor.constraint(
+                equalTo: view.topAnchor, constant: categoryTableViewTopAnchorConstant
+            ),
+        ]
+    }
+
     @objc func didTapAddCategory() {
-        let alert = UIAlertController(title: "Add Category", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
         alert.addTextField()
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: {[alert] _ in
+        alert.addAction(UIAlertAction(title: alertLeftButtonTitle, style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
             sourceData.append(Item(category: alert.textFields![0].text!, array: []))
-            self.returnTableView.reloadData()
+            self.categoryTableView.reloadData()
         }))
         present(alert, animated: true, completion: nil)
     }
-    
 }
+
+extension CategoryVC {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return sourceData.count
+    }
+
+    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = categoryTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = sourceData[indexPath.row].title
+        cell.backgroundColor = .systemGreen
+        cell.accessoryType = .disclosureIndicator
+        return cell
+    }
+
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let newVC = ItemsVC(indexPath.row)
+        selectedIndex = indexPath.row
+        newVC.title = sourceData[indexPath.row].title
+        navigationController?.pushViewController(newVC, animated: true)
+    }
+}
+
+// MARK: Constants
+
+private let categoryTableViewTopAnchorConstant: CGFloat = 20
+private let navbarRightButtonTitle = "+ Add"
+private let alertTitle = "Add Category"
+private let alertLeftButtonTitle = "Cancel"
+private let alertRightButtonTitle = "Submit"

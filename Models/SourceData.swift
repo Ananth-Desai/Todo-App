@@ -10,25 +10,17 @@ import Foundation
 struct Item {
     var title: String
     var items: [String]
-    
+
     init(category title: String, array list: [String]) {
         self.title = title
-        self.items = list
+        items = list
     }
-    
+
     mutating func addItem(_ item: String) {
-        self.items.append(item)
+        items.append(item)
     }
 }
 
 var sourceData: [Item] = [Item(category: "Shopping", array: ["Bread", "Butter", "Jam"]),
-
                           Item(category: "Sports", array: ["Shoes", "Raquet", "Ball"]),
-
                           Item(category: "School", array: ["Books", "Pens"])]
-
-//var sourceData: [Item] = []
-
-
-
-
