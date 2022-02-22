@@ -8,7 +8,6 @@
 import UIKit
 
 class ItemsVC: UIViewController {
-    
     private var index: Int
     private var itemsTableView: UITableView!
 
@@ -48,7 +47,7 @@ class ItemsVC: UIViewController {
             ),
         ]
     }
-    
+
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: navbarRightButtonTitle,
@@ -64,7 +63,7 @@ class ItemsVC: UIViewController {
 
     @objc private func didTapAddItem() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
-        alert.addTextField{(textfield) in
+        alert.addTextField { textfield in
             textfield.placeholder = textfieldPlaceholder
         }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in

@@ -41,12 +41,12 @@ class CategoryVC: UIViewController {
             ),
         ]
     }
-    
+
     private func setupNavigationBar() {
         if #available(iOS 13.0, *) {
             let navbarAppearance = UINavigationBarAppearance()
             navbarAppearance.titleTextAttributes = [
-                .foregroundColor: UIColor.white
+                .foregroundColor: UIColor.white,
             ]
             navbarAppearance.backgroundColor = UIColor.systemTeal
             navigationController?.navigationBar.standardAppearance = navbarAppearance
@@ -69,7 +69,7 @@ class CategoryVC: UIViewController {
 
     @objc private func didTapAddCategory() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
-        alert.addTextField{(textfield) in
+        alert.addTextField { textfield in
             textfield.placeholder = textfieldPlaceholder
         }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
