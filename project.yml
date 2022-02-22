@@ -1,0 +1,33 @@
+name: To-Do App
+fileGroups: [
+  To-Do App
+]
+
+configs:
+  Debug: debug
+  Release: release
+  
+schemes:
+  To-Do App:
+    build:
+      targets:
+        To-Do App: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+      
+targets:
+  To-Do App:
+    type: application
+    platform: iOS
+    deploymentTarget: "11.0"
+    sources:
+      - path: To-Do App/Resources
+        buildPhase: resources
+      - path: To-Do App/Sources
+        buildPhase: sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: "com.suryadigital.todoApp"
+        INFOPLIST_FILE: To-Do App/Info.plist

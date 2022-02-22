@@ -96,4 +96,3 @@ private let alertTitle = "Add New Todo Item"
 private let alertLeftButtonTitle = "Cancel"
 private let alertRightButtonTitle = "Submit"
 private let textfieldPlaceholder = "Create new item"
-

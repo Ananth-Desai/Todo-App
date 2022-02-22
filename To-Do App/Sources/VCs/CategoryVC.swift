@@ -21,7 +21,7 @@ class CategoryVC: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        categoryTableView.frame = view.bounds
+        categoryTableView.frame = UIScreen.main.nativeBounds
     }
 
     private func setupCategoryTableView() -> [NSLayoutConstraint] {
@@ -43,13 +43,17 @@ class CategoryVC: UIViewController {
     }
     
     private func setupNavigationBar() {
-        let navbarAppearance = UINavigationBarAppearance()
-        navbarAppearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white
-        ]
-        navbarAppearance.backgroundColor = UIColor.systemCyan
-        navigationController?.navigationBar.standardAppearance = navbarAppearance
-        navigationController?.navigationBar.scrollEdgeAppearance = navbarAppearance
+        if #available(iOS 13.0, *) {
+            let navbarAppearance = UINavigationBarAppearance()
+            navbarAppearance.titleTextAttributes = [
+                .foregroundColor: UIColor.white
+            ]
+            navbarAppearance.backgroundColor = UIColor.systemTeal
+            navigationController?.navigationBar.standardAppearance = navbarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navbarAppearance
+        } else {
+            // Fallback on earlier versions
+        }
         navigationController?.navigationBar.isTranslucent = false
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: navbarRightButtonTitle,
@@ -104,4 +108,3 @@ private let navbarRightButtonTitle = "+"
 private let alertTitle = "Add New Todo Item"
 private let alertRightButtonTitle = "Add"
 private let textfieldPlaceholder = "Add a new category"
-
