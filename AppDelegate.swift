@@ -16,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor(red: 0, green: 0 / 255, blue: 205 / 255, alpha: 1)
 
         window = UIWindow(frame: UIScreen.main.bounds)
+        let rootVC = CategoryVC()
+        rootVC.title = "Todo App"
+        window?.rootViewController = UINavigationController(rootViewController: rootVC)
+        window!.makeKeyAndVisible()
         return true
     }
 
@@ -33,3 +37,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
+

@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var selectedIndex: Int = 0
-    var categoryTableView: UITableView!
+class CategoryVC: UIViewController {
+    private var selectedIndex: Int = 0
+    private var categoryTableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         categoryTableView.frame = view.bounds
     }
 
-    func setupCategoryTableView() -> [NSLayoutConstraint] {
+    private func setupCategoryTableView() -> [NSLayoutConstraint] {
         categoryTableView = UITableView()
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         categoryTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         ]
     }
 
-    @objc func didTapAddCategory() {
+    @objc private func didTapAddCategory() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
         alert.addTextField()
         alert.addAction(UIAlertAction(title: alertLeftButtonTitle, style: .cancel, handler: nil))
@@ -60,7 +60,7 @@ class CategoryVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension CategoryVC {
+extension CategoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return sourceData.count
     }

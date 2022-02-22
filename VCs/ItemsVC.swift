@@ -7,9 +7,10 @@
 
 import UIKit
 
-class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var index: Int
-    var itemsTableView: UITableView!
+class ItemsVC: UIViewController {
+    
+    private var index: Int
+    private var itemsTableView: UITableView!
 
     init(_ index: Int) {
         self.index = index
@@ -34,7 +35,7 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         )
     }
 
-    func setupItemsTableView() -> [NSLayoutConstraint] {
+    private func setupItemsTableView() -> [NSLayoutConstraint] {
         itemsTableView = UITableView()
         itemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         itemsTableView.frame = view.bounds
@@ -53,7 +54,7 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         ]
     }
 
-    @objc func didTapAddItem() {
+    @objc private func didTapAddItem() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
         alert.addTextField()
         alert.addAction(UIAlertAction(title: alertLeftButtonTitle, style: .cancel, handler: nil))
@@ -65,7 +66,7 @@ class ItemsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ItemsVC {
+extension ItemsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return sourceData[index].items.count
     }
