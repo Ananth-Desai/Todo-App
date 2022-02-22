@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let rootVC = CategoryVC()
-        rootVC.title = "Todo App"
+        rootVC.title = "Todo"
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
         window?.rootViewController = UINavigationController(rootViewController: rootVC)

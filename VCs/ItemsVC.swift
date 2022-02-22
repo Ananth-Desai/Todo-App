@@ -27,12 +27,7 @@ class ItemsVC: UIViewController {
         view.backgroundColor = .white
         let constraints = setupItemsTableView()
         NSLayoutConstraint.activate(constraints)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: navbarRightButtonTitle,
-            style: .plain,
-            target: self,
-            action: #selector(didTapAddItem)
-        )
+        setupNavigationBar()
     }
 
     private func setupItemsTableView() -> [NSLayoutConstraint] {
@@ -53,11 +48,25 @@ class ItemsVC: UIViewController {
             ),
         ]
     }
+    
+    private func setupNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: navbarRightButtonTitle,
+            style: .plain,
+            target: self,
+            action: #selector(didTapAddItem)
+        )
+        let addButton = navigationItem.rightBarButtonItem
+        addButton?.setTitleTextAttributes([
+            .foregroundColor: UIColor.white,
+        ], for: .normal)
+    }
 
     @objc private func didTapAddItem() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
-        alert.addTextField()
-        alert.addAction(UIAlertAction(title: alertLeftButtonTitle, style: .cancel, handler: nil))
+        alert.addTextField{(textfield) in
+            textfield.placeholder = textfieldPlaceholder
+        }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
             sourceData[self.index].addItem(alert.textFields![0].text!)
             self.itemsTableView?.reloadData()
@@ -81,8 +90,10 @@ extension ItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: Constants
 
-private let itemsTableViewTopAnchorConstant: CGFloat = 20
-private let navbarRightButtonTitle = "+ Add"
-private let alertTitle = "Add Item"
+private let itemsTableViewTopAnchorConstant: CGFloat = 0
+private let navbarRightButtonTitle = "+"
+private let alertTitle = "Add New Todo Item"
 private let alertLeftButtonTitle = "Cancel"
 private let alertRightButtonTitle = "Submit"
+private let textfieldPlaceholder = "Create new item"
+

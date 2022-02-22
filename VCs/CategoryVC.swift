@@ -14,15 +14,9 @@ class CategoryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
+        setupNavigationBar()
         let constraints = setupCategoryTableView()
         NSLayoutConstraint.activate(constraints)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: navbarRightButtonTitle,
-            style: .plain,
-            target: self,
-            action: #selector(didTapAddCategory)
-        )
     }
 
     override func viewDidLayoutSubviews() {
@@ -47,11 +41,33 @@ class CategoryVC: UIViewController {
             ),
         ]
     }
+    
+    private func setupNavigationBar() {
+        let navbarAppearance = UINavigationBarAppearance()
+        navbarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white
+        ]
+        navbarAppearance.backgroundColor = UIColor.systemCyan
+        navigationController?.navigationBar.standardAppearance = navbarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navbarAppearance
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: navbarRightButtonTitle,
+            style: .plain,
+            target: self,
+            action: #selector(didTapAddCategory)
+        )
+        let addButton = navigationItem.rightBarButtonItem
+        addButton?.setTitleTextAttributes([
+            .foregroundColor: UIColor.white,
+        ], for: .normal)
+    }
 
     @objc private func didTapAddCategory() {
         let alert = UIAlertController(title: alertTitle, message: "", preferredStyle: .alert)
-        alert.addTextField()
-        alert.addAction(UIAlertAction(title: alertLeftButtonTitle, style: .cancel, handler: nil))
+        alert.addTextField{(textfield) in
+            textfield.placeholder = textfieldPlaceholder
+        }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
             sourceData.append(Item(category: alert.textFields![0].text!, array: []))
             self.categoryTableView.reloadData()
@@ -68,7 +84,7 @@ extension CategoryVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = categoryTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = sourceData[indexPath.row].title
-        cell.backgroundColor = .systemGreen
+        cell.backgroundColor = .white
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -83,8 +99,9 @@ extension CategoryVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: Constants
 
-private let categoryTableViewTopAnchorConstant: CGFloat = 20
-private let navbarRightButtonTitle = "+ Add"
-private let alertTitle = "Add Category"
-private let alertLeftButtonTitle = "Cancel"
-private let alertRightButtonTitle = "Submit"
+private let categoryTableViewTopAnchorConstant: CGFloat = 0
+private let navbarRightButtonTitle = "+"
+private let alertTitle = "Add New Todo Item"
+private let alertRightButtonTitle = "Add"
+private let textfieldPlaceholder = "Add a new category"
+

@@ -13,11 +13,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UINavigationBar.appearance().barTintColor = UIColor(red: 0, green: 0 / 255, blue: 205 / 255, alpha: 1)
-
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = CategoryVC()
-        rootVC.title = "Todo App"
+        rootVC.title = "Todo"
         window?.rootViewController = UINavigationController(rootViewController: rootVC)
         window!.makeKeyAndVisible()
         return true
