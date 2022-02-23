@@ -1,6 +1,6 @@
-name: To-Do App
+name: TodoApp
 fileGroups: [
-  To-Do App
+  TodoApp
 ]
 
 configs:
@@ -8,26 +8,26 @@ configs:
   Release: release
   
 schemes:
-  To-Do App:
+  TodoApp:
     build:
       targets:
-        To-Do App: all
+        TodoApp: all
     run:
       config: Debug
     archive:
       config: Release
       
 targets:
-  To-Do App:
+  TodoApp:
     type: application
     platform: iOS
     deploymentTarget: "11.0"
     sources:
-      - path: To-Do App/Resources
+      - path: TodoApp/Resources
         buildPhase: resources
-      - path: To-Do App/Sources
+      - path: TodoApp/Sources
         buildPhase: sources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "com.suryadigital.todoApp"
-        INFOPLIST_FILE: To-Do App/Info.plist
+        INFOPLIST_FILE: TodoApp/Info.plist

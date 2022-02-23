@@ -19,8 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let rootVC = CategoryVC()
         rootVC.title = "Todo"
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.windowScene = windowScene
+        window = UIWindow(windowScene: windowScene)
         window?.rootViewController = UINavigationController(rootViewController: rootVC)
         window!.makeKeyAndVisible()
     }

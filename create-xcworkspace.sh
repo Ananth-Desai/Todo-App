@@ -4,8 +4,7 @@ set -eu
 
 
 if [ "${1-default}" == "--clean" ]; then
-    rm -rf To-Do App.xcodeproj
-    rm -rf To-Do App.xcworkspace
+    rm -rf ToDoApp.xcodeproj
 fi
 
 ./download-tools.sh
@@ -14,9 +13,7 @@ fi
 if [ "${1-default}" == "--clean" ]; then
     xcodebuild -alltargets clean
 fi
-bundle install
-bundle exec pod install
-cp IDETemplateMacros.plist To-Do App.xcodeproj/xcshareddata/.
+
 
 
 

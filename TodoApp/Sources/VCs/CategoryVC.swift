@@ -68,8 +68,11 @@ class CategoryVC: UIViewController {
             textfield.placeholder = textfieldPlaceholder
         }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
-            sourceData.append(Item(category: alert.textFields![0].text!, array: []))
-            self.categoryTableView.reloadData()
+            guard alert.textFields![0].text! == "" else {
+                sourceData.append(Item(category: alert.textFields![0].text!, array: []))
+                self.categoryTableView.reloadData()
+                return
+            }
         }))
         present(alert, animated: true, completion: nil)
     }

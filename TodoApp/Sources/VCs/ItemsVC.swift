@@ -67,8 +67,11 @@ class ItemsVC: UIViewController {
             textfield.placeholder = textfieldPlaceholder
         }
         alert.addAction(UIAlertAction(title: alertRightButtonTitle, style: .default, handler: { [alert] _ in
-            sourceData[self.index].addItem(alert.textFields![0].text!)
-            self.itemsTableView?.reloadData()
+            guard alert.textFields![0].text! == "" else {
+                sourceData[self.index].addItem(alert.textFields![0].text!)
+                self.itemsTableView?.reloadData()
+                return
+            }
         }))
         present(alert, animated: true, completion: nil)
     }
