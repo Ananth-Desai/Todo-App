@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        window = UIWindow(frame: UIScreen.main.nativeBounds)
+        window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = CategoryVC()
         rootVC.title = "Todo"
         window?.rootViewController = UINavigationController(rootViewController: rootVC)

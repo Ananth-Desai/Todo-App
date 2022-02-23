@@ -19,11 +19,6 @@ class CategoryVC: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        categoryTableView.frame = UIScreen.main.nativeBounds
-    }
-
     private func setupCategoryTableView() -> [NSLayoutConstraint] {
         categoryTableView = UITableView()
         categoryTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
@@ -48,7 +43,7 @@ class CategoryVC: UIViewController {
             navbarAppearance.titleTextAttributes = [
                 .foregroundColor: UIColor.white,
             ]
-            navbarAppearance.backgroundColor = UIColor.systemTeal
+            navbarAppearance.backgroundColor = UIColor(red: 0.196, green: 0.678, blue: 0.901, alpha: 1)
             navigationController?.navigationBar.standardAppearance = navbarAppearance
             navigationController?.navigationBar.scrollEdgeAppearance = navbarAppearance
         } else {
