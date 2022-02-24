@@ -1,0 +1,33 @@
+name: TodoApp
+fileGroups: [
+  TodoApp
+]
+
+configs:
+  Debug: debug
+  Release: release
+  
+schemes:
+  TodoApp:
+    build:
+      targets:
+        TodoApp: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+      
+targets:
+  TodoApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "11.0"
+    sources:
+      - path: TodoApp/Resources
+        buildPhase: resources
+      - path: TodoApp/Sources
+        buildPhase: sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: "com.suryadigital.todoApp"
+        INFOPLIST_FILE: TodoApp/Info.plist
